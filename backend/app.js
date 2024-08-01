@@ -4,11 +4,17 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const userRoutes = require('./Routes/userRoutes');
+const UserModel = require('./Model/userModel')
+const cors = require('cors');
 
 const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors({
+    origin: 'http://localhost:5173', // Replace with your React app's origin
+    credentials: true
+}));
 
 // Session configuration
 app.use(session({
@@ -71,11 +77,11 @@ app.get("/api/auth/check-session", (req, res) => {
 app.use("/users", userRoutes);
 
 
-mongoose.connect("mongodb+srv://jaya:employee@employee.7h8nmby.mongodb.net/")
+mongoose.connect("mongodb+srv://jaya:employee@employee.7h8nmby.mongodb.net/?retryWrites=true&w=majority&appName=employee")
     .then(() => {
         console.log("Connected to MongoDB");
-        app.listen(5000, () => {
-            console.log("Server is running on port 5000");
+        app.listen(3001, () => {
+            console.log("Server is running on port 3001");
         });
     })
     .catch(err => console.log(err));

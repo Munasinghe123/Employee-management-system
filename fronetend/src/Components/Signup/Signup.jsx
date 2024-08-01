@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-
 import '../Signup/Signup.css';
 
-
 export default function Signup({ handleSignup }) {
-    const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [age, setAge] = useState('');
-    const [gender, setGender] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
+    const [address, setAddress] = useState('');
+    const [role, setRole] = useState('');
     const navigate = useNavigate();
+
     async function UserSignup(event) {
         event.preventDefault();
         try {
             const response = await Axios.post('http://localhost:3001/newUser', {
-                name: username,
-                age: age,
-                email: email,
+                name: name,
+                userName: userName,
                 password: password,
-                gender: gender
+                contactNumber: contactNumber,
+                address: address,
+                role: role
             });
             console.log('Response status:', response.status);
             if (response.status === 200) {
@@ -33,7 +34,7 @@ export default function Signup({ handleSignup }) {
             }
         } catch (error) {
             console.error('Error creating user:', error);
-            toast.error('An unexpected error occurred. Please try again later.');
+            //toast.error('An unexpected error occurred. Please try again later.');
         }
     }
 
@@ -45,27 +46,18 @@ export default function Signup({ handleSignup }) {
                     className='SignupInput'
                     type='text'
                     required={true}
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder='Name'
-                />
-                <br />
-                <input
-                    className='signupInput'
-                    type='number'
-                    required={true}
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    placeholder='Age'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder='Full Name'
                 />
                 <br />
                 <input
                     className='SignupInput'
-                    type='email'
+                    type='text'
                     required={true}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder='Email'
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    placeholder='Username'
                 />
                 <br />
                 <input
@@ -77,24 +69,38 @@ export default function Signup({ handleSignup }) {
                     placeholder='Password'
                 />
                 <br />
+                <input
+                    className='SignupInput'
+                    type='text'
+                    required={true}
+                    value={contactNumber}
+                    onChange={(e) => setContactNumber(e.target.value)}
+                    placeholder='Contact Number'
+                />
+                <br />
+                <input
+                    className='SignupInput'
+                    type='text'
+                    required={true}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder='Address'
+                />
+                <br />
                 <select
-                    className='signupInput'
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                    className='SignupInput'
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
                     required={true}
                 >
-                    <option value=''>Select Gender</option>
-                    <option value='male'>Male</option>
-                    <option value='female'>Female</option>
+                    <option value=''>Select Role</option>
+                    <option value='employee'>Employee</option>
+                    <option value='admin'>Admin</option>
                 </select>
                 <br />
                 <button className='LoginButton' type='submit'>Sign Up</button>
                 <span>Already a user?</span><button className='LoginButton'onClick={() => navigate('/login')}>Log in</button>
-
-
             </form>
-            
-            {/* <span className='SignupLoginText'>Already have an account? <button className='SignupLoginButton' onClick={() => navigate('/login')}>Login</button></span> */}
         </div>
     );
 }
