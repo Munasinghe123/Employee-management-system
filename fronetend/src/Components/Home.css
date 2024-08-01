@@ -26,36 +26,10 @@ h1 {
     align-items: flex-start;
 }
 
-.weather-section, .project-description {
+.project-description {
     width: 45%;
 }
 
-.weather-section {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.weather-section h2 {
-    margin-top: 0;
-    color: #333;
-}
-
-.weather-section button {
-    background-color: #f56751;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.weather-section button:hover {
-    background-color: #f56a63;
-}
 
 .project-description {
     background-color: #fff;

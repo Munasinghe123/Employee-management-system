@@ -23,18 +23,7 @@ const Home = () => {
                 <p className="user-welcome">Welcome, {user.userName}!</p>
             </header>
             <section className="content-section">
-                {/* <div className="weather-section">
-                    <h2>Today's Weather</h2>
-                    <button onClick={fetchWeatherData}>Fetch Weather Data</button>
-                    {weatherData && (
-                        <div>
-                            <p>Temperature: {weatherData.currentConditions.temp} °F</p>
-                            <p>Conditions: {weatherData.currentConditions.conditions}</p>
-                            <p>Feels like: {weatherData.currentConditions.feelslike} °F</p>
-                            <p>Wind Speed: {weatherData.currentConditions.windspeed} mph</p>
-                        </div>
-                    )}
-                </div> */}
+               
                 <div className="project-description">
                     <h2>Insert tittle</h2>
                     <p>
