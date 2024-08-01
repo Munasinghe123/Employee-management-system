@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
 
 export default function Login() {
-    const [email, setEmail] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Login() {
     async function UserLogin(event) {
         event.preventDefault();
         try {
-            await login({ email, password });
+            await login({ userName, password });
             navigate('/');
         } catch (err) {
             setError('Invalid credentials');
@@ -27,11 +27,11 @@ export default function Login() {
             <form className='LoginForm' onSubmit={UserLogin}>
                 <input
                     className='loginInput'
-                    onChange={(e) => setEmail(e.target.value)}
-                    type='email'
+                    onChange={(e) => setUserName(e.target.value)}
+                    type='text'
                     required={true}
-                    value={email}
-                    placeholder="Email"
+                    value={userName}
+                    placeholder="userName"
                 />
                 <input
                     className='loginInput'

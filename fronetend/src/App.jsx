@@ -27,12 +27,6 @@ function App() {
           user ? (
             <Routes>
               <Route path="/" element={<><Navbar handleLogout={logout} /><div className="container"><Home /></div></>} />
-              <Route path="/fashionProfiler" element={<><Navbar handleLogout={logout} /><div className="container"><FashionProfiler /></div></>} />
-              <Route path="/fashionVision" element={<><Navbar handleLogout={logout} /><div className="container"><FashionVision /></div></>} />
-              <Route path="/itemscan" element={<><Navbar handleLogout={logout} /><div className="container"><ClothingDetection /></div></>} />
-              <Route path="/profile" element={<><Navbar handleLogout={logout} /><div className="container"><Profile /></div></>} />
-              <Route path="/recommender" element={<><Navbar handleLogout={logout} /><div className="container"><Recommender /></div></>} />
-              <Route path="/figureAnalyser" element={<><Navbar handleLogout={logout} /><div className="container"><FigureAnalyser /></div></>} />
             </Routes>
           ) : (
             <Navigate to="/login" />
