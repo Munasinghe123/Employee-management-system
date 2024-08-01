@@ -19,11 +19,11 @@ const Home = () => {
     return (
         <div className="home-container">
             <header>
-                <h1>Welcome to Fashion Recommender</h1>
-                <p className="user-welcome">Welcome, {user.email}!</p>
+                <h1>Welcome to Employee Management System</h1>
+                <p className="user-welcome">Welcome, {user.userName}!</p>
             </header>
             <section className="content-section">
-                <div className="weather-section">
+                {/* <div className="weather-section">
                     <h2>Today's Weather</h2>
                     <button onClick={fetchWeatherData}>Fetch Weather Data</button>
                     {weatherData && (
@@ -34,20 +34,14 @@ const Home = () => {
                             <p>Wind Speed: {weatherData.currentConditions.windspeed} mph</p>
                         </div>
                     )}
-                </div>
+                </div> */}
                 <div className="project-description">
-                    <h2>About Our Fashion Recommender</h2>
+                    <h2>Insert tittle</h2>
                     <p>
-                        Our fashion recommender is a cutting-edge platform designed to help you discover your unique style
-                        and stay trendy regardless of the weather or occasion. Whether you're looking for casual outfits
-                        for a sunny day or elegant evening wear, our recommender has you covered.
+                        Maybe Add a Description or something here?
                     </p>
                     <p>
-                        Simply provide us with some basic details such as your gender, age, and preferences, and we'll
-                        generate personalized fashion recommendations tailored just for you.
-                    </p>
-                    <p>
-                        Get started today and elevate your fashion game to the next level!
+                       Maybe Navigation Components here in order to navigate to ur part and other peoples parts??
                     </p>
                 </div>
             </section>
