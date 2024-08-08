@@ -1,21 +1,111 @@
 const User = require('../Model/userModel')
 
-const getAllusers = async(req,res,next)=>{
+//display
+const getAllUsers = async(req,res,next)=>{
+
+    let users ; 
+
+    // get all users
+    try{
+        users = await User.find()
+    }
+    catch(err){
+        console.log(err)
+    }
+
+    //no users
+    if(!users){
+        return res.status(404).json({message:"no users"})
+    }
+
+    //displaying all the users
+    return res.status(200).json({users})
+}
+
+//insert
+const addUsers = async(req,res,next)=>{
+
+    const{name,gmail,age,address,salary}=req.body;
+
     let users;
 
     try{
-        users=await User.find()
+        users= new User({name,gmail,age,address,salary})
+        await users.save()
+    }
+    catch(err){
+        console.log(err)
+    }
+
+    //no users were added
+    if(!users){
+        res.status(404).json({message:"no users"})
+    }
+    res.status(200).json({users})
+}
+
+//get by id
+const getById= async(req,res,next)=>{
+
+    const id=req.params.id;
+
+    let user;
+
+    try{
+        user =await User.findById(id)
 
     }catch(err){
         console.log(err)
     }
-
-    if(!users){
-        return res.status(404).json({message:"no user"})
+    //no users availabel
+    if(!user){
+        res.status(404).json({message:"no users"})
     }
+    res.status(200).json({user})
+}
+//updating 
+const updateUser = async (req,res,next)=>{
 
-    return res.status(200).json({users});
+    const id = req.params.id
+    const{name,gmail,age,address,salary}=req.body;
+
+    let user;
+
+    try{
+       user=await User.findByIdAndUpdate(id, {name:name, gmail:gmail, age:age, address:address,salary:salary})
+
+       user=await user.save()
+
+    }catch(err){
+        console.log(err)
+    }
+    if(!user){
+        res.status(404).json({message:"unabel to update details"})
+    }
+    res.status(200).json({user})
+}
+//delete
+
+const deleteUser= async(req,res,next)=>{
+
+    const id=req.params.id
+
+    let user;
+
+    try {
+        user = await User.findByIdAndDelete(id)
+    } catch (err) {
+        console.log(err)
+    }
+    if(!user){
+        res.status(404).json({message:"unabel to delete"})
+    }
+    res.status(200).json({user})
 }
 
-exports.getAllusers=getAllusers
 
+exports.getAllUsers=getAllUsers
+exports.addUsers=addUsers
+exports.getById=getById
+exports.updateUser=updateUser
+exports.deleteUser=deleteUser

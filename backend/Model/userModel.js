@@ -28,7 +28,14 @@ const userSchema = new Schema ({
         type:String,
         required:true
     },
-    
+    email:{
+        type:String,
+        required:false
+    },
+    salary:{
+        type:Number,
+        required:false
+    }
 
 })
 module.exports=mongoose.model("UserModel", userSchema)
