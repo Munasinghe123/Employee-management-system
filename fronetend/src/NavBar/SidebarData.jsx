@@ -22,6 +22,13 @@ export const SidebarData = [
     icon: <FaIcons.FaRegFileAlt />,
     cName: "nav-text",
   },
+  {
+    title: "Calculate OT",
+    path: "/user/CalculateOT",
+    icon: <FaIcons.FaCommentDollar />,
+    cName: "nav-text",
+  },
+
 
   // enter ur page routes here with titles and icons for it to display on nav bar
   // https://react-icons.github.io/react-icons/icons/fa/ in case need to change icons
