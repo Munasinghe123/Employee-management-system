@@ -23,26 +23,35 @@ const getAllUsers = async(req,res,next)=>{
 }
 
 //insert
-const addUsers = async(req,res,next)=>{
+const addUsers = async (req, res, next) => {
+    const { name, userName, password, contactNumber, address, role, email, salary } = req.body;
 
-    const{name,gmail,age,address,salary}=req.body;
+    let user;
 
-    let users;
-
-    try{
-        users= new User({name,gmail,age,address,salary})
-        await users.save()
+    try {
+        user = new User({
+            name,
+            userName,
+            password,
+            contactNumber,
+            address,
+            role,
+            email,
+            salary
+        });
+        await user.save();
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Failed to add user" });
     }
-    catch(err){
-        console.log(err)
+
+    // No users were added
+    if (!user) {
+        return res.status(404).json({ message: "No user added" });
     }
 
-    //no users were added
-    if(!users){
-        res.status(404).json({message:"no users"})
-    }
-    res.status(200).json({users})
-}
+    res.status(200).json({ user });
+};
 
 //get by id
 const getById= async(req,res,next)=>{
@@ -64,26 +73,39 @@ const getById= async(req,res,next)=>{
     res.status(200).json({user})
 }
 //updating 
-const updateUser = async (req,res,next)=>{
-
-    const id = req.params.id
-    const{name,gmail,age,address,salary}=req.body;
+const updateUser = async (req, res, next) => {
+    const id = req.params.id;
+    const { name, userName, password, contactNumber, address, role, email, salary } = req.body;
 
     let user;
 
-    try{
-       user=await User.findByIdAndUpdate(id, {name:name, gmail:gmail, age:age, address:address,salary:salary})
+    try {
+        user = await User.findByIdAndUpdate(id, {
+            name,
+            userName,
+            password,
+            contactNumber,
+            address,
+            role,
+            email,
+            salary
+        }, { new: true }); // `new: true` returns the updated document
 
-       user=await user.save()
+        if (user) {
+            await user.save();
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Failed to update user" });
+    }
 
-    }catch(err){
-        console.log(err)
+    if (!user) {
+        return res.status(404).json({ message: "Unable to update user details" });
     }
-    if(!user){
-        res.status(404).json({message:"unabel to update details"})
-    }
-    res.status(200).json({user})
-}
+
+    res.status(200).json({ user });
+};
+
 //delete
 
 const deleteUser= async(req,res,next)=>{

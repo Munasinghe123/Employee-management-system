@@ -1,16 +1,18 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./DisplayUser.css"; // Import the CSS file
 
 function DisplayUser(props) {
-  const { _id, name, gmail, age, address } = props.user;
+  const { _id, name, userName, password, contactNumber, address, role, email, salary } = props.user;
 
   const navigate = useNavigate();
 
   const deleteHandler = async () => {
     try {
       await axios.delete(`http://localhost:3001/users/${_id}`);
-      refreshUsers(); // Call the function to refresh the user list
+      // Call the function to refresh the user list
+      if (props.refreshUsers) props.refreshUsers();
       navigate("/"); // Navigate to the home page or wherever you want
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -19,18 +21,22 @@ function DisplayUser(props) {
   };
 
   return (
-    <div>
-      {/* <h1>All the users</h1> <br /> */}
-      <br />
-      <h1>Id:{_id}</h1>
-      <h1>name:{name}</h1>
-      <h1>gmail:{gmail}</h1>
-      <h1>age:{age}</h1>
-      <h1>address:{address}</h1>
-      <button onClick={deleteHandler}>delete</button>
-      <Link to={`/userDetails/${_id}`}>
-        <button> update</button>
-      </Link>
+    <div className="container">
+      <h2 className="heading">User Details</h2>
+      <p className="detail"><strong>Id:</strong> {_id}</p>
+      <p className="detail"><strong>Name:</strong> {name}</p>
+      <p className="detail"><strong>Username:</strong> {userName}</p>
+      <p className="detail"><strong>Email:</strong> {email}</p>
+      <p className="detail"><strong>Contact Number:</strong> {contactNumber}</p>
+      <p className="detail"><strong>Address:</strong> {address}</p>
+      <p className="detail"><strong>Role:</strong> {role}</p>
+      <p className="detail"><strong>Salary:</strong> ${salary}</p>
+      <div className="button-group">
+        <button className="button delete-button" onClick={deleteHandler}>Delete</button>
+        <Link to={`/UpdateUser/${_id}`}>
+          <button className="button update-button">Update</button>
+        </Link>
+      </div>
     </div>
   );
 }

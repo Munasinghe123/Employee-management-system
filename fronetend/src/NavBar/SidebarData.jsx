@@ -18,7 +18,7 @@ export const SidebarData = [
   },
   {
     title: "Display Users",
-    path: "/UserDetails",
+    path: "/user/UserDetails",
     icon: <FaIcons.FaRegFileAlt />,
     cName: "nav-text",
   },

@@ -1,42 +1,32 @@
-import React, { useEffect, useState, useRef } from "react"; // Import useRef here
-//import Nav from "../Nav/Nav";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import DisplayUser from "../DisplayUser/DisplayUser";
 import { useReactToPrint } from "react-to-print";
+import './UserDetails.css'; // Import the CSS file
 
-// URL to get the data from the database
 const URL = "http://localhost:3001/users";
 
-// Fetching the data from the URL
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
 
-function UserDetails() {
-  const [users, setUsers] = useState([]); // Initialize as an empty array
-  const [filteredUsers, setFilteredUsers] = useState([]); // State to hold filtered users
-  const componentsRef = useRef(); // Use useRef to create a reference
+export default function UserDetails() {
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [noResults, setNoResults] = useState(false);
+  const componentsRef = useRef();
 
   useEffect(() => {
     fetchHandler().then((data) => {
-      const usersList = data.users || data; // Adjust based on your API response
+      const usersList = data.users || data;
       setUsers(usersList);
-      setFilteredUsers(usersList); // Initialize filtered users with all users
+      setFilteredUsers(usersList);
     });
   }, []);
 
-  // Report generation
-  const handlePrint = useReactToPrint({
-    content: () => componentsRef.current, // Reference to the element you want to print
-    documentTitle: "Users Report",
-    onAfterPrint: () => alert("Users report successfully downloaded"),
-  });
-
-  // Search functionality
-  const [searchQuery, setSearchQuery] = useState("");
-  const [noResults, setNoResults] = useState(false);
-
-  const handleSearch = () => {
+  // Update the filtered users as the search query changes
+  useEffect(() => {
     const filtered = users.filter((user) =>
       Object.values(user).some((field) =>
         field.toString().toLowerCase().includes(searchQuery.toLowerCase())
@@ -45,27 +35,33 @@ function UserDetails() {
 
     setFilteredUsers(filtered);
     setNoResults(filtered.length === 0);
-  };
+  }, [searchQuery, users]);
+
+  const handlePrint = useReactToPrint({
+    content: () => componentsRef.current,
+    documentTitle: "Users Report",
+    onAfterPrint: () => alert("Users report successfully downloaded"),
+  });
 
   return (
-    <div>
-      <Nav />
-      <h1>User Details</h1>
-
-      <input
-        onChange={(e) => setSearchQuery(e.target.value)}
-        type="text"
-        name="search"
-        placeholder="Search users"
-      />
-      <button onClick={handleSearch}>Search</button>
+    <div className="user-details-container">
+      <div className="search-container">
+        <input
+          onChange={(e) => setSearchQuery(e.target.value)}
+          type="text"
+          name="search"
+          placeholder="Search users"
+          value={searchQuery}
+        />
+        {/* The search button can be removed if you want the search to be purely dynamic */}
+      </div>
 
       {noResults ? (
-        <div>
+        <div className="no-results">
           <p>No users found</p>
         </div>
       ) : (
-        <div ref={componentsRef}>
+        <div className="user-list" ref={componentsRef}>
           {filteredUsers.map((user) => (
             <div key={user._id}>
               <DisplayUser user={user} />
@@ -74,9 +70,7 @@ function UserDetails() {
         </div>
       )}
 
-      <button onClick={handlePrint}>Download Report</button>
+      <button className="download-button" onClick={handlePrint}>Download Report</button>
     </div>
   );
 }
-
-export default UserDetails;
