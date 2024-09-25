@@ -35,6 +35,9 @@ const userSchema = new Schema ({
     salary:{
         type:Number,
         required:false
+    },
+    total_salary_with_OT:{
+        type:Number,
     }
 
 })

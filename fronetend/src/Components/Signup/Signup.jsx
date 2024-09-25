@@ -26,7 +26,7 @@ export default function Signup({ handleSignup }) {
             console.log('Response status:', response.status);
             if (response.status === 200) {
                 // Handle successful signup
-                //toast.success("User created! Please log in.");
+               
                 console.log('User created successfully:', response.data);
             } else {
                 // Handle error response
@@ -34,7 +34,7 @@ export default function Signup({ handleSignup }) {
             }
         } catch (error) {
             console.error('Error creating user:', error);
-            //toast.error('An unexpected error occurred. Please try again later.');
+           
         }
     }
 

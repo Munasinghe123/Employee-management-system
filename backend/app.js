@@ -12,7 +12,7 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 app.use(cors({
-    origin: 'http://localhost:5173', // Replace with your React app's origin
+    origin: 'http://localhost:5173',
     credentials: true
 }));
 
@@ -25,7 +25,7 @@ app.use(session({
         mongoUrl: 'mongodb+srv://jaya:employee@employee.7h8nmby.mongodb.net/sessions',
         collectionName: 'sessions',
     }),
-    cookie: { secure: false, httpOnly: true, maxAge: 1000 * 60 * 60 * 24 } // 1 day
+    cookie: { secure: false, httpOnly: true, maxAge: 1000 * 60 * 60 * 24, sameSite: 'lax', } // 1 day
 }));
 app.post("/newUser", (req, res) => {
     const newUser = new UserModel(req.body);
@@ -44,10 +44,12 @@ app.post("/api/auth/login", async (req, res) => {
     const user = await UserModel.findOne({ userName });
     if (user && user.password === password) {
         req.session.user = user;
-        res.json({ user: {
-            userName: user.userName,
-            id: user._id,
-         } });
+        res.json({
+            user: {
+                userName: user.userName,
+                id: user._id,
+            }
+        });
     } else {
         res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -63,6 +65,9 @@ app.post("/api/auth/logout", (req, res) => {
 });
 
 app.get("/api/auth/check-session", (req, res) => {
+
+    console.log("Session Data:", req.session); // Log the session data
+    
     if (req.session.user) {
         res.json({ user: req.session.user });
     } else {

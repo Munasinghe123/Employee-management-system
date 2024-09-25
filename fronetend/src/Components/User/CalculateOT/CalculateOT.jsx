@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './CalculateOT.css'
@@ -8,6 +9,7 @@ const OvertimeCalculator = () => {
   const [hours, setHours] = useState("");
   const [rate, setRate] = useState("");
   const [salary, setSalary] = useState(0);
+  const [overtimeAmount, setOvertimeAmount] = useState(0); // New state for overtime amount
 
   useEffect(() => {
     // Fetch employees with role "employee"
@@ -29,6 +31,7 @@ const OvertimeCalculator = () => {
     const employee = employees.find(emp => emp._id === employeeId);
     setSelectedEmployee(employee);
     setSalary(employee ? employee.salary : 0);
+    setOvertimeAmount(0); // Reset overtime amount when employee changes
   };
 
   const handleHoursChange = (event) => setHours(event.target.value);
@@ -44,9 +47,33 @@ const OvertimeCalculator = () => {
     }
 
     const rateDecimal = ratePercentage / 100; // Convert percentage to decimal
-    const overtimeAmount = salary * hoursNumber * rateDecimal; // Calculate overtime payment
-    alert(`Overtime Payment Amount: $${overtimeAmount.toFixed(2)}`);
+    const overtime = salary * hoursNumber * rateDecimal; // Calculate overtime payment
+    setOvertimeAmount(overtime); // Update state with calculated overtime
+    alert(`Overtime Payment Amount: $${overtime.toFixed(2)}`);
   };
+
+  const totalSalaryWithOT = salary + overtimeAmount; // Calculate total salary + overtime
+
+  const saveTotalSalaryWithOT = async () => {
+    if (!selectedEmployee) {
+        alert("Please select an employee first.");
+        return;
+    }
+
+    try {
+        // Send PUT request to update employee's total salary with overtime
+        const response = await axios.put(`http://localhost:3001/users/${selectedEmployee._id}`, {
+            total_salary_with_OT: totalSalaryWithOT, // Include total_salary_with_OT in the request
+            
+        });
+
+        alert("Total salary with overtime has been successfully updated!");
+    } catch (error) {
+        console.error("Error updating total salary with overtime:", error);
+        alert("Error updating total salary. Please try again.");
+    }
+};
+
 
   return (
     <div className="overtime-calculator">
@@ -91,6 +118,12 @@ const OvertimeCalculator = () => {
           </div>
 
           <button onClick={calculateOvertime}>Calculate Overtime</button>
+
+          {/* Display the total salary + overtime */}
+          <h2>Total salary including overtime: ${totalSalaryWithOT.toFixed(2)}</h2>
+
+          {/* Save total salary with OT to the database */}
+          <button onClick={saveTotalSalaryWithOT}>Save Total Salary with Overtime</button>
         </div>
       )}
     </div>
