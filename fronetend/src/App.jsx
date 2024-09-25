@@ -9,6 +9,7 @@ import AddUser from './Components/User/AddUser/AddUser';
 import UserDetails from './Components/User/UserDetails/UserDetails';
 import UpdateUser from './Components/User/UpdateUser/UpdateUser';
 import OvertimeCalculator from './Components/User/CalculateOT/CalculateOT';
+import ContactAdmin from './Components/User/ContactAdmin/ContactAdmin';
 
 function App() {
   const { user, logout } = useContext(AuthContext);
@@ -27,6 +28,7 @@ function App() {
             <Route path="/user/UserDetails" element={<><Navbar handleLogout={logout} /><UserDetails /></>} />
             <Route path="/UpdateUser/:id" element={<><Navbar handleLogout={logout} /><UpdateUser /></>} />
             <Route path="/user/CalculateOT" element={<><Navbar handleLogout={logout} /><OvertimeCalculator /></>} />
+            <Route path="/user/ContactAdmin" element={<><Navbar handleLogout={logout} /><ContactAdmin /></>} />
           </>
         ) : (
           <Route path="/*" element={<Navigate to="/login" />} />

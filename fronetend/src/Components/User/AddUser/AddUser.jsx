@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './AddUser.css'; // Import the CSS file
+import './AddUser.css';
 
 export default function AddUser() {
   const history = useNavigate();
@@ -14,37 +15,108 @@ export default function AddUser() {
     role: "",
     email: "",
     salary: "",
+   
   });
 
   const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+
+    // Validation based on the field
+    switch (name) {
+      case "name":
+      case "userName":
+      case "role":
+        // Allow only letters
+        if (/^[A-Za-z\s]*$/.test(value) || value === "") {
+          setInputs((prevState) => ({
+            ...prevState,
+            [name]: value,
+          }));
+        }
+        break;
+
+      case "contactNumber":
+        // Allow only numbers and check length
+        if (/^[0-9]*$/.test(value) && (value.length <= 10)) {
+          setInputs((prevState) => ({
+            ...prevState,
+            [name]: value,
+          }));
+        }
+        break;
+
+      case "salary":
+        // Allow only numbers
+        if (/^[0-9]*$/.test(value) || value === "") {
+          setInputs((prevState) => ({
+            ...prevState,
+            [name]: value,
+          }));
+        }
+        break;
+
+      case "email":
+        setInputs((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+        break;
+
+      default:
+        setInputs((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+        break;
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate email format before proceeding
+    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(inputs.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // Validate contact number length
+    if (inputs.contactNumber.length !== 10) {
+      alert("Contact number must be exactly 10 digits.");
+      return;
+    }
+
     console.log(inputs);
     sendRequest().then(() => history("/user/userDetails"));
   };
 
   const sendRequest = async () => {
-    await axios.post("http://localhost:3001/users/adduser", {
-      name: String(inputs.name),
-      userName: String(inputs.userName),
-      password: String(inputs.password),
-      contactNumber: Number(inputs.contactNumber),
-      address: String(inputs.address),
-      role: String(inputs.role),
-      email: String(inputs.email),
-      salary: Number(inputs.salary),
-    });
+
+    try{
+      await axios.post("http://localhost:3001/users/adduser", {
+        name: String(inputs.name),
+        userName: String(inputs.userName),
+        password: String(inputs.password),
+        contactNumber: Number(inputs.contactNumber),
+        address: String(inputs.address),
+        role: String(inputs.role),
+        email: String(inputs.email),
+        salary: Number(inputs.salary),
+       
+      });
+    }catch (error) {
+      // Check if the error has a response and display the message accordingly
+      if (error.response && error.response.data) {
+          alert(error.response.data.message);
+      } else {
+          alert("An error occurred. Please try again.");
+      }
+  } 
   };
 
   return (
     <div className="add-user-container">
-      <h1>Add User</h1>
+      <h1>Add Employee</h1>
 
       <form onSubmit={handleSubmit} className="add-user-form">
         <label>Name</label>
@@ -76,7 +148,7 @@ export default function AddUser() {
         
         <label>Contact Number</label>
         <input
-          type="number"
+          type="text"  
           name="contactNumber"
           onChange={handleChange}
           value={inputs.contactNumber}
@@ -107,14 +179,16 @@ export default function AddUser() {
           name="email"
           onChange={handleChange}
           value={inputs.email}
+          required
         />
         
         <label>Salary</label>
         <input
-          type="number"
+          type="text" 
           name="salary"
           onChange={handleChange}
           value={inputs.salary}
+          required
         />
         
         <button type="submit">Submit</button>

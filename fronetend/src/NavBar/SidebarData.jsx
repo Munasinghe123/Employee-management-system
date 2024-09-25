@@ -11,13 +11,13 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Add User",
+    title: "Add Employee",
     path: "/user/AddUser",
     icon: <FaIcons.FaRegUser />,
     cName: "nav-text",
   },
   {
-    title: "Display Users",
+    title: "Display Employee",
     path: "/user/UserDetails",
     icon: <FaIcons.FaRegFileAlt />,
     cName: "nav-text",
@@ -28,10 +28,13 @@ export const SidebarData = [
     icon: <FaIcons.FaCommentDollar />,
     cName: "nav-text",
   },
+  {
+    title: "Contact admin",
+    path: "/user/ContactAdmin",
+    icon: <FaIcons.FaCommentDollar />,
+    cName: "nav-text",
+  },
 
-
-  // enter ur page routes here with titles and icons for it to display on nav bar
-  // https://react-icons.github.io/react-icons/icons/fa/ in case need to change icons
 
   {
     title: "Logout",
