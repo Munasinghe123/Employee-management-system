@@ -9,7 +9,7 @@ const cors = require('cors');
 
 const app = express();
 
-// Middleware
+
 app.use(bodyParser.json());
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -43,11 +43,12 @@ app.post("/api/auth/login", async (req, res) => {
     const { userName, password } = req.body;
     const user = await UserModel.findOne({ userName });
     if (user && user.password === password) {
-        req.session.user = user;
+        req.session.user = user; 
         res.json({
             user: {
                 userName: user.userName,
                 id: user._id,
+                role: user.role 
             }
         });
     } else {
@@ -66,7 +67,7 @@ app.post("/api/auth/logout", (req, res) => {
 
 app.get("/api/auth/check-session", (req, res) => {
 
-    console.log("Session Data:", req.session); // Log the session data
+    console.log("Session Data:", req.session); 
     
     if (req.session.user) {
         res.json({ user: req.session.user });

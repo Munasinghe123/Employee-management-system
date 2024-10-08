@@ -9,10 +9,10 @@ const OvertimeCalculator = () => {
   const [hours, setHours] = useState("");
   const [rate, setRate] = useState("");
   const [salary, setSalary] = useState(0);
-  const [overtimeAmount, setOvertimeAmount] = useState(0); // New state for overtime amount
+  const [overtimeAmount, setOvertimeAmount] = useState(0); 
 
   useEffect(() => {
-    // Fetch employees with role "employee"
+    
     const fetchEmployees = async () => {
       try {
         const response = await axios.get("http://localhost:3001/users");
@@ -31,7 +31,7 @@ const OvertimeCalculator = () => {
     const employee = employees.find(emp => emp._id === employeeId);
     setSelectedEmployee(employee);
     setSalary(employee ? employee.salary : 0);
-    setOvertimeAmount(0); // Reset overtime amount when employee changes
+    setOvertimeAmount(0); 
   };
 
   const handleHoursChange = (event) => setHours(event.target.value);
@@ -46,13 +46,13 @@ const OvertimeCalculator = () => {
       return;
     }
 
-    const rateDecimal = ratePercentage / 100; // Convert percentage to decimal
-    const overtime = salary * hoursNumber * rateDecimal; // Calculate overtime payment
-    setOvertimeAmount(overtime); // Update state with calculated overtime
+    const rateDecimal = ratePercentage / 100; 
+    const overtime = salary * hoursNumber * rateDecimal; 
+    setOvertimeAmount(overtime); 
     alert(`Overtime Payment Amount: $${overtime.toFixed(2)}`);
   };
 
-  const totalSalaryWithOT = salary + overtimeAmount; // Calculate total salary + overtime
+  const totalSalaryWithOT = salary + overtimeAmount; 
 
   const saveTotalSalaryWithOT = async () => {
     if (!selectedEmployee) {
@@ -61,9 +61,9 @@ const OvertimeCalculator = () => {
     }
 
     try {
-        // Send PUT request to update employee's total salary with overtime
+        
         const response = await axios.put(`http://localhost:3001/users/${selectedEmployee._id}`, {
-            total_salary_with_OT: totalSalaryWithOT, // Include total_salary_with_OT in the request
+            total_salary_with_OT: totalSalaryWithOT, 
             
         });
 
@@ -119,10 +119,10 @@ const OvertimeCalculator = () => {
 
           <button onClick={calculateOvertime}>Calculate Overtime</button>
 
-          {/* Display the total salary + overtime */}
+          
           <h2>Total salary including overtime: ${totalSalaryWithOT.toFixed(2)}</h2>
 
-          {/* Save total salary with OT to the database */}
+          
           <button onClick={saveTotalSalaryWithOT}>Save Total Salary with Overtime</button>
         </div>
       )}
@@ -131,3 +131,5 @@ const OvertimeCalculator = () => {
 };
 
 export default OvertimeCalculator;
+
+

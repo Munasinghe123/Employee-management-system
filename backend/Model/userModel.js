@@ -17,7 +17,7 @@ const userSchema = new Schema ({
     },
     
     contactNumber:{
-        type:Number,
+        type:String,
         required:true
     },
     address:{
@@ -38,7 +38,8 @@ const userSchema = new Schema ({
     },
     total_salary_with_OT:{
         type:Number,
-    }
+    },
+   
 
 })
 module.exports=mongoose.model("UserModel", userSchema)
