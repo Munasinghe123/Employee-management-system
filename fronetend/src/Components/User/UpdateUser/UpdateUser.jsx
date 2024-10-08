@@ -1,12 +1,16 @@
+
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import './UpdateUser.css'; // Import the CSS file
+import './UpdateUser.css'; 
 
 function UpdateUser() {
   const [inputs, setInputs] = useState({});
-  const navigate = useNavigate(); // Changed to navigate
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); 
   const id = useParams().id;
 
   useEffect(() => {
@@ -25,7 +29,7 @@ function UpdateUser() {
         name: String(inputs.name),
         userName: String(inputs.userName),
         password: String(inputs.password),
-        contactNumber: Number(inputs.contactNumber),
+        contactNumber: String(inputs.contactNumber),
         address: String(inputs.address),
         role: String(inputs.role),
         email: String(inputs.email),
@@ -35,14 +39,74 @@ function UpdateUser() {
   };
 
   const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+
+    
+    switch (name) {
+      case "name":
+      case "userName":
+      case "role":
+        
+        if (/^[A-Za-z\s]*$/.test(value) || value === "") {
+          setInputs((prevState) => ({
+            ...prevState,
+            [name]: value,
+          }));
+        }
+        break;
+
+      case "contactNumber":
+        
+        if (/^\d{0,10}$/.test(value)) {
+          setInputs((prevState) => ({
+            ...prevState,
+            [name]: value,
+          }));
+        }
+        break;
+
+      case "salary":
+        
+        if (/^[0-9]*$/.test(value) || value === "") {
+          setInputs((prevState) => ({
+            ...prevState,
+            [name]: value,
+          }));
+        }
+        break;
+
+      case "email":
+        
+        setInputs((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+        break;
+
+      default:
+        setInputs((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+        break;
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    
+    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(inputs.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    
+    if (inputs.contactNumber.length !== 10) {
+      alert("Contact number must be exactly 10 digits.");
+      return;
+    }
+
     console.log(inputs);
     sendRequest().then(() => navigate("/user/userDetails"));
   };
@@ -53,7 +117,7 @@ function UpdateUser() {
 
   return (
     <div className="update-user-container">
-      <h1>Update User</h1>
+      <h1>Update Employee</h1>
 
       <form onSubmit={handleSubmit} className="update-user-form">
         <label>Name</label>
@@ -61,7 +125,7 @@ function UpdateUser() {
           type="text"
           name="name"
           onChange={handleChange}
-          value={inputs.name || ""}
+          value={inputs.name }
           required
         />
 
@@ -70,25 +134,30 @@ function UpdateUser() {
           type="text"
           name="userName"
           onChange={handleChange}
-          value={inputs.userName || ""}
+          value={inputs.userName }
           required
         />
 
         <label>Password</label>
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}  
           name="password"
           onChange={handleChange}
-          value={inputs.password || ""}
+          value={inputs.password }
           required
         />
+       
+          <input 
+            type="checkbox" 
+            onChange={() => setShowPassword(!showPassword)} 
+          /> 
 
         <label>Contact Number</label>
         <input
-          type="number"
+          type="text"  
           name="contactNumber"
           onChange={handleChange}
-          value={inputs.contactNumber || ""}
+          value={inputs.contactNumber}
           required
         />
 
@@ -97,7 +166,7 @@ function UpdateUser() {
           type="text"
           name="address"
           onChange={handleChange}
-          value={inputs.address || ""}
+          value={inputs.address}
           required
         />
 
@@ -106,7 +175,7 @@ function UpdateUser() {
           type="text"
           name="role"
           onChange={handleChange}
-          value={inputs.role || ""}
+          value={inputs.role }
           required
         />
 
@@ -115,15 +184,16 @@ function UpdateUser() {
           type="email"
           name="email"
           onChange={handleChange}
-          value={inputs.email || ""}
+          value={inputs.email}
+          required
         />
 
         <label>Salary</label>
         <input
-          type="number"
+          type="text"  
           name="salary"
           onChange={handleChange}
-          value={inputs.salary || ""}
+          value={inputs.salary }
         />
 
         <div className="update-user-buttons">

@@ -1,61 +1,100 @@
 .home-container {
-    font-family: Arial, sans-serif;
-    background-color:rgb(222, 225, 231);
     padding: 20px;
-    position: fixed;
-    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 header {
+    background-color: #f1665e;
+    color: white;
+    padding: 20px;
     text-align: center;
-    margin-bottom: 30px;
+    border-radius: 8px;
 }
 
-h1 {
-    color: #333;
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
 }
 
 .user-welcome {
-    color: #777;
     margin-top: 10px;
+    font-size: 1.2rem;
 }
 
 .content-section {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
+    margin-top: 30px;
+    flex-grow: 1;
 }
 
 .project-description {
-    width: 45%;
-}
-
-
-.project-description {
-    background-color: #fff;
+    margin-bottom: 30px;
+    background-color: #333333;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 97vw;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .project-description h2 {
-    color: #333;
+    margin-top: 0;
+    font-size: 2rem;
+    color: #f1665e;
 }
 
-.project-description p {
-    color: #555;
-    margin-bottom: 15px;
+.navigation-section {
+    margin-bottom: 30px;
 }
 
-@media (max-width: 768px) {
-    .content-section {
-        flex-direction: column;
-        align-items: center;
-    }
+.navigation-section h3 {
+    font-size: 1.8rem;
+    color: #f1665e;
+    margin-bottom: 20px;
+}
 
-    .weather-section, .project-description {
-        width: 100%;
-        margin-bottom: 20px;
-    }
+.navigation-links {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding-left: 0;
+}
+
+.navigation-links li {
+    list-style: none;
+    margin: 0;
+}
+
+.navigation-links a {
+    background-color: #f1665e;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.navigation-links a:hover {
+    background-color: #e64a19;
+}
+
+footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1rem;
+    color: #ffffff;
+    padding: 10px 0;
+    background-color: #f1665e;
+    border-radius: 8px;
 }

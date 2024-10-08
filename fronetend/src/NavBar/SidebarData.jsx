@@ -1,42 +1,72 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
-import * as IoIcons from "react-icons/io";
+import { AuthContext } from '../Context/AuthContext';
 
-export const SidebarData = [
-  {
-    title: "Home",
-    path: "/",
-    icon: <AiIcons.AiFillHome />,
-    cName: "nav-text",
-  },
-  {
-    title: "Add User",
-    path: "/user/AddUser",
-    icon: <FaIcons.FaRegUser />,
-    cName: "nav-text",
-  },
-  {
-    title: "Display Users",
-    path: "/user/UserDetails",
-    icon: <FaIcons.FaRegFileAlt />,
-    cName: "nav-text",
-  },
-  {
-    title: "Calculate OT",
-    path: "/user/CalculateOT",
-    icon: <FaIcons.FaCommentDollar />,
-    cName: "nav-text",
-  },
+export const SidebarData = () => {
+  const { user } = useContext(AuthContext);
 
+  if (!user) return []; 
 
-  // enter ur page routes here with titles and icons for it to display on nav bar
-  // https://react-icons.github.io/react-icons/icons/fa/ in case need to change icons
+  
+  if (user.role === 'admin') {
+    return [
+      {
+        title: "Home",
+        path: "/",
+        icon: <AiIcons.AiFillHome />,
+        cName: "nav-text",
+      },
+      {
+        title: "Add Employee",
+        path: "/user/AddUser",
+        icon: <FaIcons.FaRegUser />,
+        cName: "nav-text",
+      },
+      {
+        title: "Display Employee",
+        path: "/user/UserDetails",
+        icon: <FaIcons.FaRegFileAlt />,
+        cName: "nav-text",
+      },
+      {
+        title: "Calculate OT",
+        path: "/user/CalculateOT",
+        icon: <FaIcons.FaCommentDollar />,
+        cName: "nav-text",
+      },
+      {
+        title: "Logout",
+        path: "/logout",
+        icon: <AiIcons.AiOutlineLogout />,
+        cName: "nav-text",
+      },
+    ];
+  }
 
-  {
-    title: "Logout",
-    path: "/logout",
-    icon: <AiIcons.AiOutlineLogout />,
-    cName: "nav-text",
-  },
-];
+  
+  if (user.role === 'employee') {
+    return [
+      {
+        title: "Home",
+        path: "/",
+        icon: <AiIcons.AiFillHome />,
+        cName: "nav-text",
+      },
+      {
+        title: "Contact Admin",
+        path: "/user/ContactAdmin",
+        icon: <FaIcons.FaEnvelope />,
+        cName: "nav-text",
+      },
+      {
+        title: "Logout",
+        path: "/logout",
+        icon: <AiIcons.AiOutlineLogout />,
+        cName: "nav-text",
+      },
+    ];
+  }
+
+  return [];
+};

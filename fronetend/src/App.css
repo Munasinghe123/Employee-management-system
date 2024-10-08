@@ -2,19 +2,8 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: rgb(77,88,110);
+  background-color: rgb(77, 88, 110);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,52 +13,62 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  z-index: 9999;
+  flex-direction: column;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.spinner {
+  border: 8px solid rgba(241, 102, 94, 0.2);
+  border-top: 8px solid #f1665e;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-message {
+  color: #f1665e;
+  font-size: 18px;
+  margin-top: 16px;
+  text-align: center;
+  font-family: Arial, sans-serif;
 }
 
 
-*{ 
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* font-family: 'Lato',sans-serif; */
 }
 
-
-/* .DataExtraction, .Home, .FashionProfiler{
+.header {
   display: flex;
-  height: 0vh;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-} */
-
-.header{
-  display: flex;
-  /* min-width: 3000px; */
   position: fixed;
   z-index: 1;
   width: 100vw;
 }
 
-.Rname1{
-  /* height: 40px; */
+.Rname1 {
   color: white;
   font-size: 30px;
   text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif, cursive ;
+  font-family: Georgia, 'Times New Roman', Times, serif, cursive;
   font-style: italic;
   width: 100%;
   background-color: rgb(35, 35, 35);
-
 }
