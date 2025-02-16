@@ -15,7 +15,7 @@ export default function Login() {
         event.preventDefault();
         try {
             await login({ userName, password });
-            navigate('/');
+            navigate('/home');
         } catch (err) {
             setError('Invalid credentials');
         }

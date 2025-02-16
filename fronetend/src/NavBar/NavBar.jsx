@@ -17,7 +17,7 @@ function Navbar({ handleLogout }) {
   const handleClick = (path) => {
     if (path === '/logout') {
       handleLogout();
-      navigate('/login');
+      navigate('/');
     }
   };
   return (
