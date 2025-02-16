@@ -9,6 +9,7 @@ import AddUser from './Components/User/AddUser/AddUser';
 import UserDetails from './Components/User/UserDetails/UserDetails';
 import UpdateUser from './Components/User/UpdateUser/UpdateUser';
 import OvertimeCalculator from './Components/User/CalculateOT/CalculateOT';
+import LandingPage from './Components/LandingPage/LandingPage';
 
 function App() {
   const { user, logout } = useContext(AuthContext);
@@ -16,20 +17,21 @@ function App() {
   return (
     <div>
       <Routes>
+        <Route path='/' element={<LandingPage/>}/>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         {/* <Route path="/user/AddUser" element={<AddUser />} /> */}
 
         {user ? (
           <>
-            <Route path="/" element={<><Navbar handleLogout={logout} /><Home /></>} />
+            <Route path="/home" element={<><Navbar handleLogout={logout} /><Home /></>} />
             <Route path="/user/AddUser" element={<><Navbar handleLogout={logout} /><AddUser /></>} />
             <Route path="/user/UserDetails" element={<><Navbar handleLogout={logout} /><UserDetails /></>} />
             <Route path="/UpdateUser/:id" element={<><Navbar handleLogout={logout} /><UpdateUser /></>} />
             <Route path="/user/CalculateOT" element={<><Navbar handleLogout={logout} /><OvertimeCalculator /></>} />
           </>
         ) : (
-          <Route path="/*" element={<Navigate to="/login" />} />
+          <Route path='/' element={<LandingPage/>}/>
         )}
       </Routes>
     </div>

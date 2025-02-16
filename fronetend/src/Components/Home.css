@@ -1,61 +1,103 @@
-.home-container {
-    font-family: Arial, sans-serif;
-    background-color:rgb(222, 225, 231);
-    padding: 20px;
-    position: fixed;
-    height: 100vh;
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
 }
 
-header {
+/* Hero Section */
+.hero {
+    background: url('https://source.unsplash.com/1600x900/?office,work') no-repeat center center/cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    margin-bottom: 30px;
+    color: white;
+    position: relative;
 }
 
-h1 {
-    color: #333;
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin: 0;
 }
 
 .user-welcome {
-    color: #777;
-    margin-top: 10px;
+    font-size: 1.5rem;
+    margin: 10px 0;
 }
 
-.content-section {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-}
-
-.project-description {
-    width: 45%;
-}
-
-
-.project-description {
-    background-color: #fff;
-    padding: 20px;
+/* Call to Action Button */
+.cta-button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    cursor: pointer;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 97vw;
+    transition: 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #e65c00;
+}
+
+/* Content Section */
+.content-section {
+    padding: 40px;
+    text-align: center;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: -40px auto 40px;
+    width: 80%;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
 }
 
 .project-description h2 {
+    font-size: 2rem;
     color: #333;
 }
 
 .project-description p {
+    font-size: 1.2rem;
     color: #555;
     margin-bottom: 15px;
 }
 
-@media (max-width: 768px) {
-    .content-section {
-        flex-direction: column;
-        align-items: center;
-    }
+/* Navigation Links */
+.navigation-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
-    .weather-section, .project-description {
-        width: 100%;
-        margin-bottom: 20px;
-    }
+.navigation-links a {
+    text-decoration: none;
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.navigation-links a:hover {
+    background: #ff6600;
 }
